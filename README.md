@@ -2,14 +2,12 @@
 
 *A Stardew Valley mod for SMAPI + Json Assets.*
 
----
 
 ## 📖 Summary
 
 Gunther sends you a mysterious **Old Lamp** discovered among his late father’s belongings.  
 From there, the story begins — a new item, new mail, and the first step toward a desert mystery.
 
----
 
 ## ✨ Features (current)
 
@@ -23,7 +21,6 @@ From there, the story begins — a new item, new mail, and the first step toward
 - IDE: Rider or Visual Studio  
 - Dependencies: SMAPI, Json Assets  
 
----
 
 ## 📜 License
 
