@@ -1,0 +1,9 @@
+﻿{
+  "Name": "Whispers of the Lamp",
+  "Author": "Adil",
+  "Version": "1.0.0",
+  "Description": "Embark on a desert quest to uncover Anir, the Maghrebi pastry wizard, and unlock the secrets of a mysterious lamp.",
+  "UniqueID": "Adil.WhispersOfTheLamp",
+  "EntryDll": "WhispersOfTheLamp.dll",
+  "MinimumApiVersion": "4.3.0"
+}
