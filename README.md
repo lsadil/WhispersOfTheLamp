@@ -1,6 +1,6 @@
 # Whispers of the Lamp
 
-*A Stardew Valley mod for SMAPI + Json Assets.*
+*A Stardew Valley mod.*
 
 
 ## 📖 Summary
