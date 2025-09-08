@@ -1,20 +1,45 @@
 ﻿using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
+using Microsoft.Xna.Framework;
 
 namespace WhispersOfTheLamp;
 
 public sealed class ModEntry : Mod
 {
     private const string MailId = "Gunther_Lamp";
-
-    // Replace this with the real qualified ID from `list_items Old Lamp`
     private const string LampQualifiedId = "(O)Adil.WhispersOfTheLamp.Items_Old_Lamp";
+    private static Rectangle _pillarsBox = new Rectangle(26, 139, 9, 7);
 
     public override void Entry(IModHelper helper)
     {
         helper.Events.Content.AssetRequested += OnAssetRequested;
         helper.Events.GameLoop.DayStarted += OnDayStarted;
+        helper.Events.Input.ButtonReleased += OnButtonReleased;
+    }
+
+    private void OnButtonReleased(object? sender, ButtonReleasedEventArgs e)
+    {
+        if (!Context.IsWorldReady) return;
+        if (e.Button != SButton.MouseRight && e.Button != SButton.ControllerA) return;
+        if (Game1.currentLocation?.Name != "Desert") return;
+
+        var held = Game1.player.ActiveObject;
+        if (held is not { QualifiedItemId: LampQualifiedId }) return;
+
+        var farmerTile = new Point(
+            (int)(Game1.player.Position.X / 64f),
+            (int)(Game1.player.Position.Y / 64f)
+        );
+
+        if (!_pillarsBox.Contains(farmerTile)) return;
+
+        Game1.playSound("wand");
+        Game1.addHUDMessage(HUDMessage.ForCornerTextbox("The Lamp hums with ancient power..."));
+
+        Game1.warpFarmer("SkullCave", 16, 12, flip: false);
+
+        Monitor.Log("Teleported via lamp ritual", LogLevel.Info);
     }
 
     private static void OnAssetRequested(object? sender, AssetRequestedEventArgs e)
@@ -33,7 +58,7 @@ public sealed class ModEntry : Mod
             "nor do I know what purpose it once served.^^Still, something about it feels... different, as though it " +
             "carries a story waiting to be uncovered.^Since you've been such a dedicated friend to the museum, I thought " +
             "you might enjoy having it.^^Perhaps you'll uncover what I cannot.^Consider it a small token of my gratitude " +
-            "for all the wonders you've already shared with Pelican Town.^Take care of it, @. Whatever secrets this lamp holds, " +
+            "for all the wonders you've already shared with Pelican Town.^^Take care of it, @. Whatever secrets this lamp holds, " +
             "they now belong to you.^^— Gunther " +
             $"%item id {LampQualifiedId} 1 %%";
     }
