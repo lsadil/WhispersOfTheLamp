@@ -1,7 +1,13 @@
-﻿using StardewModdingAPI;
+﻿using System.Linq;
+using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
 using Microsoft.Xna.Framework;
+using xTile;
+using xTile.Dimensions;
+using xTile.Tiles;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
+
 
 namespace WhispersOfTheLamp;
 
@@ -11,11 +17,27 @@ public sealed class ModEntry : Mod
     private const string LampQualifiedId = "(O)Adil.WhispersOfTheLamp.Items_Old_Lamp";
     private static Rectangle _pillarsBox = new Rectangle(26, 139, 9, 7);
 
+    private const string CavernAsset = "Maps/Whispers_DesertCavern";
+    private const string CavernName = "Whispers_DesertCavern";
+
     public override void Entry(IModHelper helper)
     {
         helper.Events.Content.AssetRequested += OnAssetRequested;
         helper.Events.GameLoop.DayStarted += OnDayStarted;
         helper.Events.Input.ButtonReleased += OnButtonReleased;
+        helper.Events.GameLoop.SaveLoaded += OnSaveLoaded_AddLocation;
+    }
+
+    private void OnSaveLoaded_AddLocation(object? sender, SaveLoadedEventArgs e)
+    {
+        if (Game1.locations.Any(l => l.Name.Equals(CavernName)))
+            return;
+
+        // create location directly from map asset path
+        var loc = new GameLocation(CavernAsset, CavernName);
+
+        Game1.locations.Add(loc);
+        Monitor.Log($"Added custom location '{CavernName}'.", LogLevel.Info);
     }
 
     private void OnButtonReleased(object? sender, ButtonReleasedEventArgs e)
