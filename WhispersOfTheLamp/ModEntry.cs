@@ -59,7 +59,7 @@ public sealed class ModEntry : Mod
         Game1.playSound("wand");
         Game1.addHUDMessage(HUDMessage.ForCornerTextbox("The Lamp hums with ancient power..."));
 
-        Game1.warpFarmer("SkullCave", 16, 12, flip: false);
+        Game1.warpFarmer(CavernName, 8, 8, flip: false);
 
         Monitor.Log("Teleported via lamp ritual", LogLevel.Info);
     }
