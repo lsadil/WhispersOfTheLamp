@@ -9,11 +9,11 @@ namespace WhispersOfTheLamp.Services
 {
     public class LocationManager
     {
-        private readonly IMonitor Monitor;
+        private readonly IMonitor _monitor;
 
         public LocationManager(IMonitor monitor)
         {
-            Monitor = monitor;
+            _monitor = monitor;
         }
 
         public void OnSaveLoaded_AddLocation(object? sender, SaveLoadedEventArgs e)
@@ -23,11 +23,11 @@ namespace WhispersOfTheLamp.Services
 
             var loc = new GameLocation(ModConfig.CavernAsset, ModConfig.CavernName);
             Game1.locations.Add(loc);
-            Monitor.Log($"Added custom location '{ModConfig.CavernName}'.", LogLevel.Info);
+            _monitor.Log($"Added custom location '{ModConfig.CavernName}'.", LogLevel.Info);
 
             loc = new GameLocation("Maps/Whispers_SecondCavern", "Whispers_SecondCavern");
             Game1.locations.Add(loc);
-            Monitor.Log("Added custom location 'Second Cavern'.", LogLevel.Info);
+            _monitor.Log("Added custom location 'Second Cavern'.", LogLevel.Info);
         }
     }
 }

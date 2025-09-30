@@ -2,12 +2,10 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
-using xTile.Layers;
-using xTile.Tiles;
+
 
 namespace WhispersOfTheLamp.Services
 {
@@ -169,7 +167,7 @@ namespace WhispersOfTheLamp.Services
             if (Game1.currentLocation?.Name != _locationName || _displayed.Count == 0)
                 return;
 
-            SpriteBatch b = e.SpriteBatch;
+            var b = e.SpriteBatch;
 
             foreach (var (tile, item) in _displayed)
             {

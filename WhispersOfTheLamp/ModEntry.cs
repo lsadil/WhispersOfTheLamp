@@ -1,6 +1,4 @@
-﻿// ModEntry.cs
-
-using StardewModdingAPI;
+﻿using StardewModdingAPI;
 using WhispersOfTheLamp.Services;
 
 namespace WhispersOfTheLamp
@@ -11,7 +9,8 @@ namespace WhispersOfTheLamp
         private LocationManager _locationManager = null!;
         private InputHandler _inputHandler = null!;
         private MailManager _mailManager = null!;
-        private DisplaySpotSystem? _displaySpots;
+        private PedestalPuzzleSystem? _pedestalPuzzle;
+        private HintRockSystem? _hintRocks;
 
         public override void Entry(IModHelper helper)
         {
@@ -27,9 +26,12 @@ namespace WhispersOfTheLamp
             helper.Events.Content.AssetRequested += _mailManager.OnAssetRequested;
             helper.Events.GameLoop.DayStarted += _mailManager.OnDayStarted;
 
-            _displaySpots = new DisplaySpotSystem(helper, Monitor, ModConfig.CavernName);
-            _displaySpots.Enable();
-            helper.Events.GameLoop.ReturnedToTitle += (_, __) => _displaySpots?.Dispose();
+            _pedestalPuzzle = new PedestalPuzzleSystem(helper, Monitor, ModConfig.CavernName);
+            _pedestalPuzzle.Enable();
+            _hintRocks = new HintRockSystem(helper, Monitor, ModConfig.CavernName);
+            _hintRocks.Enable();
+
+            helper.Events.GameLoop.ReturnedToTitle += (_, __) => { _pedestalPuzzle?.Dispose(); };
         }
     }
 }
